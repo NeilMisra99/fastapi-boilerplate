@@ -48,8 +48,8 @@ async def download_ai_slides_pdf(request: Request):
             <meta charset="utf-8">
             <style>
               @font-face {
-                font-family: 'Liberation Sans';
-                src: url('https://fonts.gstatic.com/s/liberationsans/v14/mem5YaGs126MiZpBA-UN_r8OUuhp.ttf') format('truetype');
+                font-family: 'Inter';
+                src: url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap') format('truetype');
               }
               
               @page {
@@ -59,10 +59,10 @@ async def download_ai_slides_pdf(request: Request):
               body { 
                 margin: 0; 
                 padding: 0;
-                font-family: 'Liberation Sans', Arial, 'Helvetica Neue', Helvetica, sans-serif;
+                font-family: 'Inter', Arial, 'Helvetica Neue', Helvetica, sans-serif;
               }
               .slide {
-                font-family: 'Liberation Sans', Arial, 'Helvetica Neue', Helvetica, sans-serif;
+                font-family: 'Inter', Arial, 'Helvetica Neue', Helvetica, sans-serif;
                 position: relative;
                 background-color: #ffffff;
                 width: 1080px;
@@ -73,6 +73,7 @@ async def download_ai_slides_pdf(request: Request):
               }
 
               .slide div {
+                font-family: 'Inter', Arial, 'Helvetica Neue', Helvetica, sans-serif;
                 min-width: 0;
                 position: absolute;
                 box-sizing: border-box;
@@ -301,7 +302,7 @@ async def download_ai_slides_pdf(request: Request):
             # Create PDF using WeasyPrint with Merriweather font CSS
             html = HTML(string=full_html)
             css = CSS(string='''
-                @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
+                @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
                 @page {
                     size: 1080px 810px landscape;
                     margin: 0;
