@@ -1,7 +1,8 @@
 from typing import Union
 
 from fastapi import FastAPI, HTTPException, Request
-from weasyprint import HTML, CSS, FontConfiguration
+from weasyprint import HTML, CSS
+from weasyprint.text.fonts import FontConfiguration
 import re
 from fastapi.responses import Response
 import logging
