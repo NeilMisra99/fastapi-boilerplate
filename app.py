@@ -345,7 +345,7 @@ async def download_ai_slides_pdf(request: Request):
                 }}
                 /* Reset line-height to browser defaults */
                 p, div, span, li {{
-                    line-height: normal !important;
+                    line-height: 1.5 !important;
                 }}
             ''', font_config=font_config)
             
