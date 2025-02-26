@@ -49,7 +49,16 @@ async def download_ai_slides_pdf(request: Request):
             <style>
               @font-face {
                 font-family: 'Inter';
-                src: url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap') format('truetype');
+                font-style: normal;
+                font-weight: 100 900;
+                src: url('fonts/Inter-VariableFont_opsz,wght.ttf') format('truetype-variations');
+              }
+              
+              @font-face {
+                font-family: 'Inter';
+                font-style: italic;
+                font-weight: 100 900;
+                src: url('fonts/Inter-Italic-VariableFont_opsz,wght.ttf') format('truetype-variations');
               }
               
               @page {
@@ -299,16 +308,30 @@ async def download_ai_slides_pdf(request: Request):
             # Configure fonts
             font_config = FontConfiguration()
             
-            # Create PDF using WeasyPrint with Merriweather font CSS
+            # Create PDF using WeasyPrint with local Inter variable font files
             html = HTML(string=full_html)
             css = CSS(string='''
-                @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+                @font-face {
+                    font-family: 'Inter';
+                    font-style: normal;
+                    font-weight: 100 900;
+                    src: url('fonts/Inter-VariableFont_opsz,wght.ttf') format('truetype-variations');
+                }
+                @font-face {
+                    font-family: 'Inter';
+                    font-style: italic;
+                    font-weight: 100 900;
+                    src: url('fonts/Inter-Italic-VariableFont_opsz,wght.ttf') format('truetype-variations');
+                }
                 @page {
                     size: 1080px 810px landscape;
                     margin: 0;
                 }
                 :root {
-                    font-family: 'Merriweather', serif;
+                    font-family: 'Inter', sans-serif;
+                }
+                * {
+                    font-family: 'Inter', sans-serif !important;
                 }
             ''')
             
