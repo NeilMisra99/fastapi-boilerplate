@@ -343,6 +343,10 @@ async def download_ai_slides_pdf(request: Request):
                 body, * {{
                     font-family: 'Inter', sans-serif !important;
                 }}
+                /* Reset line-height to browser defaults */
+                p, div, span, li {{
+                    line-height: normal !important;
+                }}
             ''', font_config=font_config)
             
             # Generate PDF
