@@ -6,6 +6,8 @@ from weasyprint.text.fonts import FontConfiguration
 import re
 from fastapi.responses import Response
 import logging
+import os
+from pathlib import Path
 
 app = FastAPI()
 
@@ -305,40 +307,47 @@ async def download_ai_slides_pdf(request: Request):
         """
 
         try:
-            # Configure fonts
-            font_config = FontConfiguration()
+            # Get the absolute path to the fonts directory
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            fonts_dir = os.path.join(current_dir, "fonts")
             
-            # Create PDF using WeasyPrint with local Inter variable font files
+            # Make sure the font paths are absolute
+            normal_font_path = os.path.join(fonts_dir, "Inter-VariableFont_opsz,wght.ttf")
+            italic_font_path = os.path.join(fonts_dir, "Inter-Italic-VariableFont_opsz,wght.ttf")
+            
+            # Verify font files exist
+            if not os.path.exists(normal_font_path) or not os.path.exists(italic_font_path):
+                logging.error(f"Font files not found: {normal_font_path}, {italic_font_path}")
+                raise HTTPException(status_code=500, detail="Font files not found")
+            
+            # Create PDF using WeasyPrint with absolute paths to font files
             html = HTML(string=full_html)
-            css = CSS(string='''
-                @font-face {
+            css = CSS(string=f'''
+                @font-face {{
                     font-family: 'Inter';
                     font-style: normal;
                     font-weight: 100 900;
-                    src: url('fonts/Inter-VariableFont_opsz,wght.ttf') format('truetype-variations');
-                }
-                @font-face {
+                    src: url('file://{normal_font_path}') format('truetype-variations');
+                }}
+                @font-face {{
                     font-family: 'Inter';
                     font-style: italic;
                     font-weight: 100 900;
-                    src: url('fonts/Inter-Italic-VariableFont_opsz,wght.ttf') format('truetype-variations');
-                }
-                @page {
+                    src: url('file://{italic_font_path}') format('truetype-variations');
+                }}
+                @page {{
                     size: 1080px 810px landscape;
                     margin: 0;
-                }
-                :root {
-                    font-family: 'Inter', sans-serif;
-                }
-                * {
+                }}
+                body, * {{
                     font-family: 'Inter', sans-serif !important;
-                }
+                }}
             ''')
             
             # Generate PDF
             pdf = html.write_pdf(
                 stylesheets=[css],
-                font_config=font_config,
+                font_config=FontConfiguration(),
                 presentational_hints=True
             )
             
