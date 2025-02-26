@@ -321,6 +321,7 @@ async def download_ai_slides_pdf(request: Request):
                 raise HTTPException(status_code=500, detail="Font files not found")
             
             # Create PDF using WeasyPrint with absolute paths to font files
+            font_config = FontConfiguration()
             html = HTML(string=full_html)
             css = CSS(string=f'''
                 @font-face {{
@@ -342,12 +343,12 @@ async def download_ai_slides_pdf(request: Request):
                 body, * {{
                     font-family: 'Inter', sans-serif !important;
                 }}
-            ''')
+            ''', font_config=font_config)
             
             # Generate PDF
             pdf = html.write_pdf(
                 stylesheets=[css],
-                font_config=FontConfiguration(),
+                font_config=font_config,
                 presentational_hints=True
             )
             
