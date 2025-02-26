@@ -2,4 +2,4 @@ runtime: python
 startCommand: uvicorn app:app --port 8080
 buildCommand: apt-get update && apt-get install -y libpango-1.0-0 libharfbuzz0b libpangoft2-1.0-0 libharfbuzz-subset0 libjpeg-dev libopenjp2-7-dev libffi-dev && pip install -r requirements.txt
 port: 8080
-memory: 512mb
+memory: 1024mb
